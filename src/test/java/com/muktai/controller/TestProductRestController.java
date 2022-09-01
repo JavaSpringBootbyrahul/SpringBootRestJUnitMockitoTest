@@ -89,9 +89,16 @@ public class TestProductRestController
 			fail("No product found");
 		}
 	}
-//	@Test
-//	public void testGetOneProductNotFound()
-//	{
-//		
-//	}
+	@Test
+	public void testGetOneProductNotFound() throws Exception
+	{
+		//1.create the dummy request
+		MockHttpServletRequestBuilder request=MockMvcRequestBuilders.get("/product/one/10");
+		//2. Execute the request and generates result
+		MvcResult result=mockmvc.perform(request).andReturn();
+		//3. read the response
+		MockHttpServletResponse response=result.getResponse();
+		//4. validate using assert method status is 404
+		assertEquals(HttpStatus.NOT_FOUND.value(),response.getStatus());
+	}
 }
