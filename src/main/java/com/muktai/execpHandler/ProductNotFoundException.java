@@ -12,6 +12,8 @@ public class ProductNotFoundException extends RuntimeException
 	{
 		this.message = message;
 	}
-	
-	
+
+	public String getMessage() {
+		return message;
+	}
 }

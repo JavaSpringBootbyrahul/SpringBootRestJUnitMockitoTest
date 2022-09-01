@@ -45,4 +45,53 @@ public class TestProductRestController
 			fail("Product not created!!!!");
 		}
 	}
+	
+	@Test
+	public void testGetAllProducts() throws Exception
+	{
+		//1.create the dummy request
+		MockHttpServletRequestBuilder request=MockMvcRequestBuilders.get("/product/all");
+		//2. execute the request and gets the result
+		MvcResult result =mockmvc.perform(request).andReturn();
+		
+		//3. reads the response
+		MockHttpServletResponse response=result.getResponse();
+		
+		//4. Test that response using assert method and status is 200 Ok
+		assertEquals(HttpStatus.OK.value(),response.getStatus());
+		assertEquals(MediaType.APPLICATION_JSON_VALUE,response.getContentType());
+		if(response.getContentAsString().isEmpty())
+		{
+			fail("No products there");
+		}
+	}
+	
+	@Test
+	public void testGetOneProduct() throws Exception
+	{
+		//1. create the dummy request
+		MockHttpServletRequestBuilder request=MockMvcRequestBuilders.get("/product/one/4");
+		
+		//2. execute the request and get the result
+		MvcResult result=mockmvc.perform(request).andReturn();
+		
+		//3. read the response
+		MockHttpServletResponse response=result.getResponse();
+		
+		//4. test using assert method status is ok
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		
+		//test content type matching
+		assertEquals(MediaType.APPLICATION_JSON_VALUE,response.getContentType());
+		//check the content length
+		if(response.getContentAsString().isEmpty())
+		{
+			fail("No product found");
+		}
+	}
+//	@Test
+//	public void testGetOneProductNotFound()
+//	{
+//		
+//	}
 }
